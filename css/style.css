@@ -1,0 +1,28 @@
+@charset "utf-8";
+
+h1 {
+    background-color:blue;
+    color:white;
+    font: size 30px;
+    padding:20px 50px;
+}
+h2{
+    font-size:20px;
+    border-bottom: solid #b0c4de;
+    border-left: solid 10px #b0c4de;
+    padding-left:10px;
+}
+.user{
+    padding:20px;
+}
+th,td{
+    border:solid 2px;
+    padding:10px;
+}
+th{
+    background-color:blueviolet;
+}
+table{
+    border-collapse: collapse;
+    padding-top:20px;
+}
