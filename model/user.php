@@ -63,5 +63,29 @@ class User extends DB{
             $stmt->execute($params);
         }
     }
+
+    //入力チェック　validate
+    public function validate($arr){
+        $message = array();
+
+        //ユーザ名
+        if(empty($arr['user_name'])){
+            $message['user_name'] = 'ユーザ名は空です。';
+        }
+        //メールアドレス
+        if(empty($arr['email'])){
+            $message['email'] = 'メールアドレスは空です。';
+        }else{
+            if(!filter_var($arr['email'], FILTER_VALIDATE_EMAIL)){
+                $message['email'] = 'メールアドレスが正しくありません。';
+            }
+        }
+        //パスワード
+        if(empty($arr['password'])){
+            $message['password'] = 'パスワードは空です。';
+        }
+
+        return $message;
+    }
 }
 ?>

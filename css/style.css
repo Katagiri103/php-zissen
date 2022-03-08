@@ -26,3 +26,6 @@ table{
     border-collapse: collapse;
     padding-top:20px;
 }
+p.error{
+    color:red;
+}

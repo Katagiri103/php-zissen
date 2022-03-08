@@ -1,4 +1,4 @@
-<?php
+<?php //勉強頑張ろう！
 require_once("../config/config.php");
 require_once("../model/user.php");
 try {
@@ -10,8 +10,12 @@ try {
     if(isset($_GET['edit'])){
         //編集処理
         if($_POST){
-            $user->edit($_POST);
-        }
+            $message = $user->validate($_POST);
+            if(empty($message['user_name']) && empty($message['email']) && empty($message['password'])) {
+                $user->edit($_POST);
+            }
+        }    
+    
 
         //参照処理
         $result['User'] = $user->findById($_GET['edit']);
@@ -23,7 +27,6 @@ try {
         //参照処理
         $result = $user->findAll();
 
-    //削除処理
     
     }
     //登録処理
@@ -31,7 +34,10 @@ try {
 
         //登録処理
         if($_POST){
-            $user->add($_POST);
+            $message = $user->validate($_POST);
+            if(empty($message['user_name']) && empty($message['email']) && empty($message['password'])) {
+                $user->add($_POST);
+            }
         }
         //参照処理
         $result = $user->findAll();
@@ -61,6 +67,10 @@ try {
         <h2>ユーザ一覧</h2>
 
         <p>以下にユーザ情報を入力して送信を押すとユーザが登録できます。</p>
+        <?php if(isset($message['user_name'])) echo "<p class='error'>".$message['user_name']."</p>" ?>
+        <?php if(isset($message['email'])) echo "<p class='error'>".$message['email']."</p>" ?>
+        <?php if(isset($message['password'])) echo "<p class='error'>".$message['password']."</p>" ?>
+
         <form action="" method="post">
             <label id="user_name">ユーザ名: <input type="text" name="user_name" size="20" value="<?php if(isset($result['User'])) echo $result['User']['user_name'] ?>"></label>
             <label id="email">メールアドレス: <input type="text" name="email" size="40" value="<?php if(isset($result['User'])) echo $result['User']['email'] ?>"></label>
