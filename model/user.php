@@ -3,6 +3,15 @@ require_once("DB.php");
 
 class User extends DB{
 
+    public function login($arr){
+        $sql = 'SELECT * FROM users WHERE user_name = :user_name AND password = :password';
+        $stmt = $this->connect->prepare($sql);
+        $params = array(':user_name'=>$arr['user_name'], ':password'=>$arr['password']);
+        $stmt->execute($params);
+        $result = $stmt->rowCount();
+        return $result;
+    }
+
     //参照のメソッド
     public function findAll(){
         $sql = 'SELECT * FROM users';
