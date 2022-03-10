@@ -29,3 +29,8 @@ table{
 p.error{
     color:red;
 }
+.category{
+    float:left;
+    padding-left:20px;
+    
+}

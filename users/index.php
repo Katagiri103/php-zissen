@@ -77,7 +77,10 @@ try {
     <header>
         <h1><a href="index.php">サンプル</a></h1>
     </header>
-
+    <section class="category">
+        <a href="/study/php-zissen/users">ユーザ一覧</a>
+        <a href="/study/php-zissen/products">商品一覧</a>
+    </section>
     <section class="user">
         <h2>ユーザ一覧</h2>
         <p><a href="?logout=1">ログアウト</a></p>
