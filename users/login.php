@@ -1,4 +1,7 @@
 <?php
+session_start();
+
+
 require_once("../config/config.php");
 require_once("../model/user.php");
 try {
@@ -6,11 +9,14 @@ try {
     $user->connectDb();
     
     if($_POST){
-        //0->false, 1->true
-        if($user->login($_POST)){
-            echo "ログイン出来た！";
+        $result = $user->login($_POST);
+        
+        if(!empty($result)){
+            $_SESSION['User'] = $result;
+            header('Location:/study/php-zissen/users/index.php');
+            exit;
         }else{
-            echo "ログイン却下！";
+            $message = "ログイン却下！";
         }
     }
 }catch(PDOException $e){
@@ -36,6 +42,7 @@ try {
         <h2>ログインフォーム</h2>
 
         <p>ログインするには以下にユーザ名とパスワードを入力してね！</p>
+        <?php if(isset($message)) echo "<p class='error'>".$message."</p>" ?>
         <form action="" method="POST">
             <table>
                 <tr>

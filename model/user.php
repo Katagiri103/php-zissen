@@ -8,7 +8,8 @@ class User extends DB{
         $stmt = $this->connect->prepare($sql);
         $params = array(':user_name'=>$arr['user_name'], ':password'=>$arr['password']);
         $stmt->execute($params);
-        $result = $stmt->rowCount();
+        //$result = $stmt->rowCount();
+        $result = $stmt->fetch();
         return $result;
     }
 

@@ -1,6 +1,14 @@
-<?php //勉強頑張ろう！
+<?php
+session_start();
+
 require_once("../config/config.php");
 require_once("../model/user.php");
+
+//ログイン画面を経由しているかの確認
+if(!isset($_SESSION['User'])){
+    header('Location:/study/php-zissen/users/login.php');
+    exit;
+}
 try {
     $user = new User($host, $dbname, $portNumber, $user, $pass);
     $user->connectDb();
