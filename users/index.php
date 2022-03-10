@@ -4,6 +4,13 @@ session_start();
 require_once("../config/config.php");
 require_once("../model/user.php");
 
+//ログアウト処理
+if(isset($_GET['logout'])){
+    //セッション情報を破棄する
+    $_SESSION = array();
+    session_destroy();
+}
+
 //ログイン画面を経由しているかの確認
 if(!isset($_SESSION['User'])){
     header('Location:/study/php-zissen/users/login.php');
@@ -73,6 +80,7 @@ try {
 
     <section class="user">
         <h2>ユーザ一覧</h2>
+        <p><a href="?logout=1">ログアウト</a></p>
 
         <p>以下にユーザ情報を入力して送信を押すとユーザが登録できます。</p>
         <?php if(isset($message['user_name'])) echo "<p class='error'>".$message['user_name']."</p>" ?>
