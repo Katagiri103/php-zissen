@@ -16,9 +16,23 @@ if(!isset($_SESSION['User'])){
     header('Location:/study/php-zissen/users/login.php');
     exit;
 }
+
+
+
 try {
     $product = new Product($host, $dbname, $portNumber, $user, $pass);
     $product->connectDb();
+
+    if($_POST){
+        foreach($_POST as $key => $num){
+            if($num > 0){
+                $data = array('user_id'=>$_SESSION['User']['id'], 'product_id'=>$key, 'num'=>$num);
+                $product->registerProduct($data);
+            }
+        }
+            
+        
+    }
 
     $result = $product->findAll();
     
@@ -43,28 +57,33 @@ try {
         <h1><a href="index.php">サンプル</a></h1>
     </header>
     <section class="category">
-        <a href="">ユーザ一覧</a>
-        <a href="">商品一覧</a>
+        <a href="/study/php-zissen/users">ユーザ一覧</a>
+        <a href="/study/php-zissen/products">商品一覧</a>
     </section>
     <section class="user">
         <h2>商品一覧</h2>
         <p><a href="?logout=1">ログアウト</a></p>
-      
 
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>商品名</th>
-                <th>価格</th>
-            </tr>
-            <?php foreach($result as $row):?>
-            <tr>
-                <td><?=$row['id']?></td>
-                <td><?=$row['name']?></td>
-                <td><?=$row['price']?></td>
-            </tr>
-            <?php endforeach?>
-        </table>
+        <form action="index.php" method="POST">
+      
+            <p><input type="submit" value="購入"></p>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>商品名</th>
+                    <th>価格</th>
+                    <th>個数</th>
+                </tr>
+                <?php foreach($result as $row):?>
+                <tr>
+                    <td><?=$row['id']?></td>
+                    <td><?=$row['name']?></td>
+                    <td><?=$row['price']?></td>
+                    <td><input type="text" size="5" name="<?=$row['id']?>" value="0">個</td>
+                </tr>
+                <?php endforeach?>
+            </table>
+        </form>
     </section>
 
     <footer>
